@@ -1,9 +1,9 @@
 class Carro():
-    def __init__(self,marca,modelo, ano,preco,portas):
+    def __init__(self,marca,modelo,ano,preco,portas):
         #print("O objeto {} foi construído!".format(self))
         self.marca = marca
-        self.modelo = modelo
-        self.ano = ano
+        self.__modelo = modelo
+        self.__ano = ano
         self.portas = portas
         self.__preco = preco
 
@@ -18,16 +18,69 @@ class Carro():
 
     def get_modelo(self):
         return self.modelo
+    
+    @property
+    def modelo(self):
+        return self.__modelo
+    
+    @modelo.setter
+    def modelo(self, novo_modelo):
+        self.__modelo = novo_modelo
 
-c1 = Carro('Fiat', 'Marea Turbo', 2026, 50000, 4)
+    def setAno(self, ano):
+        self.__ano = ano
+    
+    def getAno(self):
+        return self.__ano
+    
+    ano = property(fget= getAno, fset=setAno)
 
-car = Carro('Fiat', 'Marea Turbo', 2026, 50000, 4)
+# c1 = Carro('Fiat', 'Marea Turbo', 2026, 50000, 4)
 
-print(car._Carro__preco) #Acessando atributos privados
+# car = Carro('Fiat', 'Marea Turbo', 2026, 50000, 4)
 
-car.set_modelo('marea turbo plus')
+# print(car._Carro__preco) #Acessando atributos privados
 
-print(car.get_modelo())
+# car.modelo = "Tempra"
+
+# print(car.modelo)
+
+# print(car.ano)
+
+#Métodos protegidos.
+
+class Servidor:
+    def __init__(self, nome, salario, tel):
+        self._nome = nome
+        self.__salario = salario
+        self._tel = tel
+
+    def calcularSalario(self):
+        return self.__salario * 12
+    
+#fulano = Servidor('Leonardo Apolinário', 50000, 31990796285)
+
+#print(dir(fulano))
+
+
+class Pessoa:
+    _num_pessoa = 0
+
+    def __init__(self, idade):
+        self.__idade = idade
+        Pessoa._num_pessoa += 1
+    
+    @staticmethod
+    def get_num_pessoas():
+        return Pessoa._num_pessoa
+
+p1 = Pessoa(20)
+p2 = Pessoa(30)
+p3 = Pessoa(40)
+
+print(str(Pessoa._num_pessoa) + ' ' + str(Pessoa.get_num_pessoas()))
+
+
 
 
 
