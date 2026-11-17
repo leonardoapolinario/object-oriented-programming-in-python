@@ -63,6 +63,7 @@ class Servidor:
 #print(dir(fulano))
 
 
+# staticmethod
 class Pessoa:
     _num_pessoa = 0
 
@@ -78,10 +79,36 @@ p1 = Pessoa(20)
 p2 = Pessoa(30)
 p3 = Pessoa(40)
 
-print(str(Pessoa._num_pessoa) + ' ' + str(Pessoa.get_num_pessoas()))
+#print(str(Pessoa._num_pessoa) + ' ' + str(Pessoa.get_num_pessoas()))
 
+# classmethod
 
+class Cidadao:
+    _num_cidadaos = 0
+    __slots__ = ['__rg', 'nome']
 
+    def __init__(self, rg, nome):
+        self.__rg = rg
+        self.nome = nome
+        Cidadao._num_cidadaos += 1
+
+    @classmethod
+    def get_num_cidadaos(cls):
+        return Cidadao._num_cidadaos
+
+c1 = Cidadao(1243123, 'josé')
+c2 = Cidadao(8908903, 'maria')
+c3 = Cidadao(5398039, 'silva')
+
+#print(Cidadao.get_num_cidadaos())
+
+pp = Cidadao(8908903, 'dutra')
+
+pp.carro = 'Tempra'
+
+print(dir(pp))
+
+# Implementando __slots__
 
 
 
