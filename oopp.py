@@ -104,11 +104,34 @@ c3 = Cidadao(5398039, 'silva')
 
 pp = Cidadao(8908903, 'dutra')
 
-pp.carro = 'Tempra'
-
-print(dir(pp))
-
 # Implementando __slots__
+
+city = object.__new__(Cidadao)
+
+city.__init__(89089009,'Maurílio')
+
+class Functionario(object):
+    def __init__(self, nome, cpf, salario):
+        self._nome = nome
+        self._cpf = cpf
+        self._salario = salario
+
+class Gerente(Functionario):
+    def __init__(self, nome, cpf, salario, senha,qtd_subordinados):
+        super().__init__(nome,cpf, salario)
+        self._senha = senha
+        self._qtd_subordinados = qtd_subordinados
+
+    def validacao(self, senha):
+        return (self._senha == senha)
+
+
+class Secretaria(Functionario):
+    def __init__(self, nome, cpf, salario, senha, qtd_gerentes):
+        super().__init__(nome, cpf, salario)
+        self._senha = senha
+        self._qtd_gerentes = qtd_gerentes
+
 
 
 
