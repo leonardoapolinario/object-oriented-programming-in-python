@@ -116,6 +116,9 @@ class Functionario(object):
         self._cpf = cpf
         self._salario = salario
 
+    def mostra_bonus(self):
+        return self._salario * 0.10
+
 class Gerente(Functionario):
     def __init__(self, nome, cpf, salario, senha,qtd_subordinados):
         super().__init__(nome,cpf, salario)
@@ -125,13 +128,70 @@ class Gerente(Functionario):
     def validacao(self, senha):
         return (self._senha == senha)
 
+    def mostra_bonus(self):
+        return self._salario * 0.10 + self._qtd_subordinados * 0.10
 
 class Secretaria(Functionario):
     def __init__(self, nome, cpf, salario, senha, qtd_gerentes):
         super().__init__(nome, cpf, salario)
         self._senha = senha
         self._qtd_gerentes = qtd_gerentes
+    
+    def mostra_bonus(self):
+        return self._salario * 0.10 + self._qtd_gerentes * 0.10
+
+# É um
+
+s1 = Secretaria('Maria', 8908089,8980980, 143123412, 3)
+
+g1 = Gerente('Leonardo', 89089080, 2139082, 8908093, 10)
+
+print(s1.mostra_bonus())
+
+print(g1.mostra_bonus())
+
+class GestaoDeBonus:
+    def __init__(self, total_bonificacoes=0):
+        self._total_bonificacoes = total_bonificacoes
+
+    def registra(self, funcionario):
+        self._total_bonificacoes += funcionario.mostra_bonus()
+
+    @property
+    def total_bonificacoes(self):
+        return self._total_bonificacoes
+
+g1 = Gerente('Manoel', 987, 5600, 1234, 10)
+s1 = Secretaria('Maria', 345, 4000, 789,5)
 
 
 
+# hasattr
+
+class Engenheiro():
+    def __init__(self, nome):
+        self._nome = nome
+        
+e1 = Engenheiro('Manoel')
+
+class GestaoDeBonus:
+    def __init__(self, total_bonificacoes=0):
+        self._total_bonificacoes = total_bonificacoes
+
+    def registra(self, funcionario):
+        if(hasattr(funcionario, 'mostra_bonus')):
+            self._total_bonificacoes += funcionario.mostra_bonus()
+        else:
+            print("O objeto {} não possui implementação mostra_bonus".format(self.__class__.__name__))
+
+    @property
+    def total_bonificacoes(self):
+        return self._total_bonificacoes
+
+gestao = GestaoDeBonus()
+
+gestao.registra(g1)
+gestao.registra(s1)
+
+print(gestao.registra(e1))
 
